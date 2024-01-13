@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
 import Swal from 'sweetalert2';
-import * as Yup from 'yup';
 export default function Users() {
   const [newUserName, setNewUserName] = useState('');
   const [newUserEmail, setNewUserEmail] = useState('');
@@ -35,7 +34,18 @@ export default function Users() {
       }
     });
   };
-
+  const userDeleteHandler = () => {
+    Swal.fire({
+      title: 'are you sure on deleting ? ',
+      icon: 'question',
+      confirmButtonText: 'yes',
+      showCancelButton: true,
+      cancelButtonText: 'no',
+    }).then((result) => {
+      if (result.isConfirmed) {
+      }
+    });
+  };
   return (
     <div className=" bg-white mx-4 my-5  shadow-md ">
       {/* UserHeader */}
@@ -99,7 +109,9 @@ export default function Users() {
             <td>AiTajik</td>
             <td>@ali.1385.tajik.a@gamil.com</td>
             <td>#123-456ABC</td>
-            <button className="bg-none">Delete</button>
+            <button className="bg-none" onClick={userDeleteHandler}>
+              Delete
+            </button>
           </tr>
           <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
             <td>03</td>

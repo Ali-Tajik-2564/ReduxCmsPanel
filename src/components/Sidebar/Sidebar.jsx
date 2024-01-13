@@ -18,7 +18,11 @@ export default function Sidebar() {
       <div className="w-full flex items-center pt-[35px] pl-[35px] pb-[86px] pr-[47px] ">
         <Link to="/">
           {' '}
-          <img src="./logo-1.png" className="w-[75px] h-[45px]" />
+          <img
+            src="./logo-1.png"
+            className="w-[75px] h-[45px]"
+            onClick={() => setSelectedPanel('Dashboard')}
+          />
         </Link>
         <p className="text-white text-base font-bold ">A.devepol</p>
       </div>
