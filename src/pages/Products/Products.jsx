@@ -1,13 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
 import Swal from 'sweetalert2';
-
+import ProductSchema from '../../Validation/ProductValidate';
 export default function PRoducts() {
-  const [ProductName, setProductName] = useState('');
-  const [ProductStock, setProductStock] = useState('');
-  const [ProductOff, setProductOff] = useState('');
-  const [ProductPrice, setProductPrice] = useState('');
+  const [ProductName, setProductName] = useState();
+  const [ProductStock, setProductStock] = useState();
+  const [ProductOff, setProductOff] = useState();
+  const [ProductPrice, setProductPrice] = useState();
+  const [errors, setErrors] = useState({});
+  console.log(errors);
+  useEffect(() => {
+    const newProduct = {
+      name: ProductName,
+      stock: ProductStock,
+      off: ProductOff,
+      Price: ProductPrice,
+    };
+
+    // const isValid = await registerSchema.isValid(newUser);
+
+    ProductSchema.validate(newProduct, {
+      abortEarly: false,
+    }).catch((err) => {
+      let error = err.inner.reduce(
+        (acc, err) => ({
+          ...acc,
+          [err.path]: err.message,
+        }),
+        {}
+      );
+      setErrors(error);
+    });
+  }, [ProductName, ProductStock, ProductOff, ProductPrice]);
+
   const AddingNewProduct = () => {};
   const ProductDeleteHandler = () => {
     Swal.fire({
@@ -83,10 +109,19 @@ export default function PRoducts() {
           <input
             type="text"
             id="name"
-            className="bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  "
+            className={`bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  ${
+              errors && errors.name
+                ? 'shadow-md shadow-red-500'
+                : 'shadow-md shadow-primaryGreen'
+            }`}
             placeholder="Product Name"
             onChange={(event) => setProductName(event.target.value)}
           />
+          {errors && errors.name ? (
+            <p className="text-sm font-normal text-rose-600">{errors.name}</p>
+          ) : (
+            ''
+          )}
         </div>
         <div className="flex flex-col items-start justify-start gap-2">
           <label
@@ -97,10 +132,19 @@ export default function PRoducts() {
           <input
             type="text"
             id="Stock"
-            className="bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  "
-            placeholder="Stock "
+            className={`bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  ${
+              errors && errors.stock
+                ? 'shadow-md shadow-red-500'
+                : 'shadow-md shadow-primaryGreen'
+            }`}
+            placeholder="Product Stock"
             onChange={(event) => setProductStock(event.target.value)}
           />
+          {errors && errors.stock ? (
+            <p className="text-sm font-normal text-rose-600">{errors.stock}</p>
+          ) : (
+            ''
+          )}
         </div>
         <div className="flex flex-col items-start justify-start gap-2">
           <label
@@ -111,10 +155,19 @@ export default function PRoducts() {
           <input
             type="text"
             id="Off"
-            className="bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  "
-            placeholder="Off "
+            className={`bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  ${
+              errors && errors.off
+                ? 'shadow-md shadow-red-500'
+                : 'shadow-md shadow-primaryGreen'
+            }`}
+            placeholder="Product Off"
             onChange={(event) => setProductOff(event.target.value)}
           />
+          {errors && errors.off ? (
+            <p className="text-sm font-normal text-rose-600">{errors.off}</p>
+          ) : (
+            ''
+          )}
         </div>
         <div className="flex flex-col items-start justify-start gap-2">
           <label
@@ -125,15 +178,27 @@ export default function PRoducts() {
           <input
             type="text"
             id="Price"
-            className="bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  "
-            placeholder="Price "
+            className={`bg-none p-1 text-primaryItem focus:outline-none px-[5px] border-solid border border-primaryItem/50 rounded w-56 h-10  ${
+              errors && errors.price
+                ? 'shadow-md shadow-red-500'
+                : 'shadow-md shadow-primaryGreen'
+            }`}
+            placeholder="Product Price"
             onChange={(event) => setProductPrice(event.target.value)}
           />
+          {errors && errors.price ? (
+            <p className="text-sm font-normal text-rose-600">{errors.price}</p>
+          ) : (
+            ''
+          )}
         </div>
         <div className="flex flex-col items-start justify-start gap-2">
           <button
-            className="bg-primaryButton text-white text-base font-normal w-24 h-10 rounded py-[10px] px-[15px] "
-            onClick={AddingNewProduct}>
+            className={`bg-primaryButton text-white text-base font-normal w-24 h-10 rounded py-[10px] px-[15px] ${
+              errors ? 'opacity-50' : ''
+            }`}
+            onClick={AddingNewProduct}
+            disabled={errors}>
             Add New
           </button>
         </div>

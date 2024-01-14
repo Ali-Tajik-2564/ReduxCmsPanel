@@ -1,13 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
 import Swal from 'sweetalert2';
 import Editor from '../../components/Editor/Editor';
+import ArticleSchema from '../../Validation/ArticleVaidate';
 export default function Articles() {
   const [articleBody, setArticleBody] = useState('');
   const [articleName, setArticleName] = useState('');
   const [articleCategory, setArticleCategory] = useState('');
   const [articleWriter, setArticleWriter] = useState('');
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const newArticle = {
+      body: articleBody,
+      name: articleName,
+      category: articleCategory,
+      writer: articleWriter,
+    };
+
+    // const isValid = await registerSchema.isValid(newUser);
+    try {
+      const isValid = ArticleSchema.validate(newArticle, {
+        abortEarly: false,
+      });
+      console.log({ isValid });
+    } catch (err) {
+      let errors = err.inner.reduce(
+        (acc, err) => ({
+          ...acc,
+          [err.path]: err.message,
+        }),
+        {}
+      );
+      setErrors(errors);
+    }
+  }, [articleBody, articleName, articleCategory, articleWriter]);
+
   const AddingNewArticle = () => {};
   const articleDeleteHandler = () => {
     Swal.fire({
