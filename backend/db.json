@@ -4,37 +4,43 @@
       "id": "1",
       "name": "ali Tajik",
       "email": "@ali.1385.tajik",
-      "roll": "user"
+      "roll": "user",
+      "password": "123456"
     },
     {
       "id": "2",
       "name": "ali Tajik",
       "email": "@ali.1385.tajik",
-      "roll": "user"
+      "roll": "user",
+      "password": "123456"
     },
     {
       "id": "3",
       "name": "ali Tajik",
       "email": "@ali.1385.tajik",
-      "roll": "user"
+      "roll": "user",
+      "password": "123456"
     },
     {
       "id": "4",
       "name": "ali Tajik",
       "email": "@ali.1385.tajik",
-      "roll": "user"
+      "roll": "user",
+      "password": "123456"
     },
     {
       "id": "5",
       "name": "ali Tajik",
       "email": "@ali.1385.tajik",
-      "roll": "user"
+      "roll": "user",
+      "password": "123456"
     },
     {
       "id": "6",
       "name": "ali Tajik",
       "email": "@ali.1385.tajik",
-      "roll": "user"
+      "roll": "user",
+      "password": "123456"
     }
   ],
   "articles": [

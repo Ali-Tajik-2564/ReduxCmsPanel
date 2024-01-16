@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { getUsersFormServer } from '../../Redux/reducer/UserReducer';
+import Pagination from '../../components/pagination/Pagination';
 export default function Users() {
-  const [newUserName, setNewUserName] = useState('');
-  const [newUserEmail, setNewUserEmail] = useState('');
-  const [newUserPassWord, setNewUserPassWord] = useState('');
+  const [shownUsers, setShownUsers] = useState([]);
+  const dispatch = useDispatch();
+  const store = useSelector((store) => store.users);
+
+  useEffect(() => {
+    dispatch(getUsersFormServer('https://redux-cms-panel.liara.run/users'));
+  }, []);
 
   const AddingNewUser = () => {
     Swal.fire({
@@ -17,6 +24,7 @@ export default function Users() {
       <input type="email" id="swal-input2" class="swal2-input"  placeholder="email">
     
         <input type="password" id="swal-input3" class="swal2-input"  placeholder="password">
+        <input type="text" id="swal-input4" class="swal2-input"  placeholder="roll">
       `,
       focusConfirm: false,
       preConfirm: () => {
@@ -24,13 +32,15 @@ export default function Users() {
           document.getElementById('swal-input1').value,
           document.getElementById('swal-input2').value,
           document.getElementById('swal-input3').value,
+          document.getElementById('swal-input4').value,
         ];
       },
     }).then((infos) => {
       if (infos.isConfirmed) {
-        setNewUserName(infos.value[0]);
-        setNewUserEmail(infos.value[1]);
-        setNewUserPassWord(infos.value[2]);
+        // setNewUserName(infos.value[0]);
+        // setNewUserEmail(infos.value[1]);
+        // setNewUserPassWord(infos.value[2]);
+        // setNewUserRoll(infos.value[3]);
       }
     });
   };
@@ -103,24 +113,26 @@ export default function Users() {
             <td>Actions</td>
           </th>
         </thead>
+
         <tbody className="w-full h-full">
-          <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
-            <td>03</td>
-            <td>AiTajik</td>
-            <td>@ali.1385.tajik.a@gamil.com</td>
-            <td>User</td>
-            <button className="bg-none" onClick={userDeleteHandler}>
-              Delete
-            </button>
-          </tr>
-          <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
-            <td>03</td>
-            <td>AiTajik</td>
-            <td>@ali.1385.tajik.a@gamil.com</td>
-            <td>user</td>
-            <button className="bg-none">Delete</button>
-          </tr>
+          {shownUsers.map((user) => (
+            <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.roll}</td>
+              <button className="bg-none" onClick={userDeleteHandler}>
+                Delete
+              </button>
+            </tr>
+          ))}
         </tbody>
+        <Pagination
+          pathname="/users"
+          itemCount={5}
+          items={store}
+          setShownCourses={setShownUsers}
+        />
       </table>
 
       {/* UserTable */}
