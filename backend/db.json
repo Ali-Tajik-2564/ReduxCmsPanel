@@ -1,0 +1,149 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "ali Tajik",
+      "email": "@ali.1385.tajik",
+      "roll": "user"
+    },
+    {
+      "id": "2",
+      "name": "ali Tajik",
+      "email": "@ali.1385.tajik",
+      "roll": "user"
+    },
+    {
+      "id": "3",
+      "name": "ali Tajik",
+      "email": "@ali.1385.tajik",
+      "roll": "user"
+    },
+    {
+      "id": "4",
+      "name": "ali Tajik",
+      "email": "@ali.1385.tajik",
+      "roll": "user"
+    },
+    {
+      "id": "5",
+      "name": "ali Tajik",
+      "email": "@ali.1385.tajik",
+      "roll": "user"
+    },
+    {
+      "id": "6",
+      "name": "ali Tajik",
+      "email": "@ali.1385.tajik",
+      "roll": "user"
+    }
+  ],
+  "articles": [
+    {
+      "id": "1",
+      "name": "about i phone 13",
+      "category": "tech",
+      "writer": "ali Tajik"
+    },
+    {
+      "id": "2",
+      "name": "about i phone 13",
+      "category": "tech",
+      "writer": "ali Tajik"
+    },
+    {
+      "id": "3",
+      "name": "about i phone 13",
+      "category": "tech",
+      "writer": "ali Tajik"
+    },
+    {
+      "id": "4",
+      "name": "about i phone 13",
+      "category": "tech",
+      "writer": "ali Tajik"
+    },
+    {
+      "id": "5",
+      "name": "about i phone 13",
+      "category": "tech",
+      "writer": "ali Tajik"
+    },
+    {
+      "id": "6",
+      "name": "about i phone 13",
+      "category": "tech",
+      "writer": "ali Tajik"
+    },
+    {
+      "id": "7",
+      "name": "about i phone 13",
+      "category": "tech",
+      "writer": "ali Tajik"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "2",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "3",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "4",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "5",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "6",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "7",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "8",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    },
+    {
+      "id": "9",
+      "name": "milk",
+      "stock": " 25",
+      "price": "250,000",
+      "off": "0"
+    }
+  ]
+}

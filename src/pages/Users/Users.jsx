@@ -108,7 +108,7 @@ export default function Users() {
             <td>03</td>
             <td>AiTajik</td>
             <td>@ali.1385.tajik.a@gamil.com</td>
-            <td>#123-456ABC</td>
+            <td>User</td>
             <button className="bg-none" onClick={userDeleteHandler}>
               Delete
             </button>

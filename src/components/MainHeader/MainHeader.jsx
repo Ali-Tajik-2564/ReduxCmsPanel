@@ -7,7 +7,7 @@ export default function MainHeader() {
       <div className="w-1/2 flex flex-row-reverse   items-center">
         <div className="relative w-[74px] h-[58px]  rounded-full ml-4">
           <img
-            src="./profile.jpg"
+            src=".././profile.jpg"
             alt=""
             className=" w-[58px] h-[58px] rounded-full "
           />

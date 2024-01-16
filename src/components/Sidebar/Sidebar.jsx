@@ -19,7 +19,7 @@ export default function Sidebar() {
         <Link to="/">
           {' '}
           <img
-            src="./logo-1.png"
+            src=".././logo-1.png"
             className="w-[75px] h-[45px]"
             onClick={() => setSelectedPanel('Dashboard')}
           />
@@ -29,7 +29,7 @@ export default function Sidebar() {
 
       <ul className=" w-full flex flex-col items-center justify-center text-base text-white  font-bold  space-y-16">
         <Link
-          to="/"
+          to="/users/1"
           className="w-full  relative"
           onClick={() => setSelectedPanel('Dashboard')}>
           {' '}
@@ -41,7 +41,7 @@ export default function Sidebar() {
           )}
         </Link>
         <Link
-          to="/"
+          to="/users/1"
           className="w-full  relative"
           onClick={() => setSelectedPanel('User management')}>
           {' '}
@@ -53,7 +53,7 @@ export default function Sidebar() {
           )}
         </Link>
         <Link
-          to="/articles"
+          to="/articles/1"
           className="w-full  relative"
           onClick={() => setSelectedPanel('Articles')}>
           {' '}
@@ -65,7 +65,7 @@ export default function Sidebar() {
           )}
         </Link>
         <Link
-          to="/products"
+          to="/products/1"
           className="w-full  relative"
           onClick={() => setSelectedPanel('Products')}>
           {' '}
