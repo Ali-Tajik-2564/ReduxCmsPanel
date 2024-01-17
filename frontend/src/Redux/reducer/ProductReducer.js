@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getUsersFormServer = createAsyncThunk(
-  'users/getUsersFromServer',
+  'product/getProductFromServer',
   async (url) => {
     console.log('url', url);
     return fetch(url)
@@ -9,19 +9,19 @@ export const getUsersFormServer = createAsyncThunk(
       .then((data) => data);
   }
 );
-export const RemoveUsersFormServer = createAsyncThunk(
-  'users/RemoveUsersFromServer',
+export const RemoveProductFormServer = createAsyncThunk(
+  'product/RemoveProductFromServer',
   async (url) => {
     console.log('url', url);
     return fetch(url, {
       method: 'DELETE',
     })
       .then((res) => res.json())
-      .then((data) => data);
+      .then((data) => console.log(data));
   }
 );
 export const AddProductFormServer = createAsyncThunk(
-  'users/AddUsersFromServer',
+  'product/AddProductFromServer',
   async (url, product) => {
     console.log('url', url);
     return fetch(url, {
@@ -33,7 +33,7 @@ export const AddProductFormServer = createAsyncThunk(
   }
 );
 export const PutOffProductFormServer = createAsyncThunk(
-  'users/PutOffUsersFromServer',
+  'product/PutOffProductFromServer',
   async (url, off) => {
     console.log('url', url);
     return fetch(url, {
@@ -64,7 +64,7 @@ const slice = createSlice({
       getUsersFormServer.fulfilled,
       (state, action) => action.payload
     );
-    Builder.addCase(RemoveUsersFormServer.fulfilled, (state, action) => {
+    Builder.addCase(RemoveProductFormServer.fulfilled, (state, action) => {
       const newState = state.filter((user) => user._id !== action.payload.id);
       return newState;
     });

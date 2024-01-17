@@ -3,7 +3,11 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { getUsersFormServer } from '../../Redux/reducer/UserReducer';
+import {
+  RemoveUsersFormServer,
+  getUsersFormServer,
+  AddUsersFormServer,
+} from '../../Redux/reducer/UserReducer';
 import Pagination from '../../components/pagination/Pagination';
 export default function Users() {
   const [shownUsers, setShownUsers] = useState([]);
@@ -12,7 +16,7 @@ export default function Users() {
 
   useEffect(() => {
     dispatch(getUsersFormServer('https://redux-cms-panel.liara.run/users'));
-  }, []);
+  }, [shownUsers]);
 
   const AddingNewUser = () => {
     Swal.fire({
@@ -37,14 +41,23 @@ export default function Users() {
       },
     }).then((infos) => {
       if (infos.isConfirmed) {
-        // setNewUserName(infos.value[0]);
-        // setNewUserEmail(infos.value[1]);
-        // setNewUserPassWord(infos.value[2]);
-        // setNewUserRoll(infos.value[3]);
+        const formData = {
+          name: infos.value[0],
+          email: infos.value[1],
+          password: infos.value[2],
+          roll: infos.value[3],
+        };
+
+        dispatch(
+          AddUsersFormServer(
+            'https://redux-cms-panel.liara.run/users',
+            formData
+          )
+        );
       }
     });
   };
-  const userDeleteHandler = () => {
+  const userDeleteHandler = (userID) => {
     Swal.fire({
       title: 'are you sure on deleting ? ',
       icon: 'question',
@@ -53,6 +66,11 @@ export default function Users() {
       cancelButtonText: 'no',
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(
+          RemoveUsersFormServer(
+            `https://redux-cms-panel.liara.run/users/${userID}`
+          )
+        );
       }
     });
   };
@@ -121,7 +139,9 @@ export default function Users() {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.roll}</td>
-              <button className="bg-none" onClick={userDeleteHandler}>
+              <button
+                className="bg-none"
+                onClick={() => userDeleteHandler(user.id)}>
                 Delete
               </button>
             </tr>
