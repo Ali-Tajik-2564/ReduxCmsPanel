@@ -16,7 +16,7 @@ export default function Users() {
 
   useEffect(() => {
     dispatch(getUsersFormServer('https://redux-cms-panel.liara.run/users'));
-  }, [shownUsers]);
+  }, [store]);
 
   const AddingNewUser = () => {
     Swal.fire({
@@ -40,20 +40,16 @@ export default function Users() {
         ];
       },
     }).then((infos) => {
-      if (infos.isConfirmed) {
+      if (infos.value) {
         const formData = {
           name: infos.value[0],
           email: infos.value[1],
-          password: infos.value[2],
           roll: infos.value[3],
+          password: infos.value[2],
         };
 
-        dispatch(
-          AddUsersFormServer(
-            'https://redux-cms-panel.liara.run/users',
-            formData
-          )
-        );
+        dispatch(AddUsersFormServer(formData));
+        console.log(formData, 'formData');
       }
     });
   };

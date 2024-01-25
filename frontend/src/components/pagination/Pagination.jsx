@@ -21,14 +21,26 @@ export default function Pagination({
     setPageCount(pageNumber);
   }, [page, items]);
   return (
-    <div class="courses-pagination">
-      <ul class="courses__pagination-list">
+    <div class="my-12">
+      <ul class="flex item-center justify-center">
         {Number(page) !== 1 && (
           <li class="courses__pagination-item">
             <Link
               to={`${pathname}/${Number(page) - 1}`}
-              class="courses__pagination-link">
-              <i class="fas fa-long-arrow-alt-right courses__pagination-icon"></i>
+              class="flex w-16 h-16 justify-center items-center text-base bg-primaryInput text-primaryItem mx-2 rounded-lg hover:bg-primarySide">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                />
+              </svg>
             </Link>
           </li>
         )}
@@ -40,25 +52,36 @@ export default function Pagination({
               {index + 1 === Number(page) ? (
                 <Link
                   to={`${pathname}/${index + 1}`}
-                  class="courses__pagination-link courses__pagination-link--active">
+                  class="flex w-16 h-16 justify-center items-center text-base bg-primaryButton text-white mx-2 rounded-lg hover:bg-primarySide">
                   {index + 1}
                 </Link>
               ) : (
                 <Link
                   to={`${pathname}/${index + 1}`}
-                  class="courses__pagination-link">
+                  class="flex w-16 h-16 justify-center items-center text-base bg-primaryInput text-primaryItem mx-2 rounded-lg hover:bg-primarySide">
                   {index + 1}
                 </Link>
               )}
             </li>
           ))}
-
         {Number(page) !== pageCount && (
           <li class="courses__pagination-item">
             <Link
               to={`${pathname}/${Number(page) + 1}`}
-              class="courses__pagination-link">
-              <i class="fas fa-long-arrow-alt-left courses__pagination-icon"></i>
+              class="flex w-16 h-16 justify-center items-center text-base bg-primaryInput text-primaryItem mx-2 rounded-lg hover:bg-primarySide">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
             </Link>
           </li>
         )}

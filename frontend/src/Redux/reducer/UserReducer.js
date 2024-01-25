@@ -22,14 +22,20 @@ export const RemoveUsersFormServer = createAsyncThunk(
 );
 export const AddUsersFormServer = createAsyncThunk(
   'users/AddUsersFromServer',
-  async (url, user) => {
-    console.log('url', url);
-    return fetch(url, {
+  async (users) => {
+    console.log('user', users);
+    return fetch('https://redux-cms-panel.liara.run/users', {
       method: 'POST',
-      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(users),
     })
       .then((res) => res.json())
-      .then((data) => data);
+      .then((data) => {
+        console.log('data', data);
+        return data;
+      });
   }
 );
 
