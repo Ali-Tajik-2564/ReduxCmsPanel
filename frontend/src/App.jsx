@@ -10,8 +10,8 @@ import MainHeader from './components/MainHeader/MainHeader';
 function App() {
   const router = useRoutes(routes);
   return (
-    <div className="w-full flex">
-      <div className="w-62 h-screen">
+    <div className="w-full  flex">
+      <div className="w-62 min-h-screen ">
         <Sidebar />
       </div>
       <div className="w-297 bg-primaryBody">

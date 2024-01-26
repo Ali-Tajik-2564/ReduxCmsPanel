@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getUsersFormServer = createAsyncThunk(
+export const getProductFormServer = createAsyncThunk(
   'product/getProductFromServer',
   async (url) => {
     console.log('url', url);
@@ -22,10 +22,13 @@ export const RemoveProductFormServer = createAsyncThunk(
 );
 export const AddProductFormServer = createAsyncThunk(
   'product/AddProductFromServer',
-  async (url, product) => {
+  async ({ url, product }) => {
     console.log('url', url);
     return fetch(url, {
       method: 'POST',
+      headers: {
+        'content-Type': 'application/json',
+      },
       body: JSON.stringify(product),
     })
       .then((res) => res.json())
@@ -34,14 +37,24 @@ export const AddProductFormServer = createAsyncThunk(
 );
 export const PutOffProductFormServer = createAsyncThunk(
   'product/PutOffProductFromServer',
-  async (url, off) => {
+  async ({ url, product }) => {
     console.log('url', url);
+    console.log('off', product);
     return fetch(url, {
       method: 'PUT',
-      body: JSON.stringify(off),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(product),
     })
-      .then((res) => res.json())
-      .then((data) => data);
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
   }
 );
 const slice = createSlice({
@@ -61,7 +74,7 @@ const slice = createSlice({
   },
   extraReducers: (Builder) => {
     Builder.addCase(
-      getUsersFormServer.fulfilled,
+      getProductFormServer.fulfilled,
       (state, action) => action.payload
     );
     Builder.addCase(RemoveProductFormServer.fulfilled, (state, action) => {
@@ -71,10 +84,10 @@ const slice = createSlice({
     Builder.addCase(AddProductFormServer.fulfilled, (state, action) => {
       return [...state, action.payload];
     });
-    Builder.addCase(
-      PutOffProductFormServer.fulfilled,
-      (state, action) => action.payload
-    );
+    Builder.addCase(PutOffProductFormServer.fulfilled, (state, action) => {
+      console.log(action.payload);
+      return [...state, action.payload];
+    });
   },
 });
 

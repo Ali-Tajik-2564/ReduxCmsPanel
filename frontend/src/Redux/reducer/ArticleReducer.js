@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getUsersFormServer = createAsyncThunk(
-  'users/getUsersFromServer',
+export const getArticleFormServer = createAsyncThunk(
+  'Article/getArticleFromServer',
   async (url) => {
     console.log('url', url);
     return fetch(url)
@@ -9,8 +9,8 @@ export const getUsersFormServer = createAsyncThunk(
       .then((data) => data);
   }
 );
-export const RemoveUsersFormServer = createAsyncThunk(
-  'users/RemoveUsersFromServer',
+export const RemoveArticleFormServer = createAsyncThunk(
+  'Article/RemoveArticleFromServer',
   async (url) => {
     console.log('url', url);
     return fetch(url, {
@@ -21,15 +21,24 @@ export const RemoveUsersFormServer = createAsyncThunk(
   }
 );
 export const AddArticleFormServer = createAsyncThunk(
-  'users/AddUsersFromServer',
-  async (url, article) => {
-    console.log('url', url);
-    return fetch(url, {
+  'Article/AddArticleFromServer',
+  async (article) => {
+    console.log('article', article);
+    return fetch('https://redux-cms-panel.liara.run/articles ', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(article),
     })
-      .then((res) => res.json())
-      .then((data) => data);
+      .then((res) => {
+        console.log('res', res);
+        return res.json();
+      })
+      .then((data) => {
+        console.log('data', data);
+        return data;
+      });
   }
 );
 
@@ -50,10 +59,10 @@ const slice = createSlice({
   },
   extraReducers: (Builder) => {
     Builder.addCase(
-      getUsersFormServer.fulfilled,
+      getArticleFormServer.fulfilled,
       (state, action) => action.payload
     );
-    Builder.addCase(RemoveUsersFormServer.fulfilled, (state, action) => {
+    Builder.addCase(RemoveArticleFormServer.fulfilled, (state, action) => {
       const newState = state.filter((user) => user._id !== action.payload.id);
       return newState;
     });

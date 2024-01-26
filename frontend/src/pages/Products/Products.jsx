@@ -2,14 +2,42 @@ import React, { useEffect, useState } from 'react';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
+import Pagination from '../../components/pagination/Pagination';
+import {
+  AddProductFormServer,
+  PutOffProductFormServer,
+  RemoveProductFormServer,
+  getProductFormServer,
+} from '../../Redux/reducer/ProductReducer';
 export default function PRoducts() {
+  const [shownProducts, setShownProducts] = useState([]);
   const [ProductName, setProductName] = useState();
   const [ProductStock, setProductStock] = useState();
   const [ProductOff, setProductOff] = useState();
   const [ProductPrice, setProductPrice] = useState();
-
-  const AddingNewProduct = () => {};
-  const ProductDeleteHandler = () => {
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state.products);
+  useEffect(() => {
+    dispatch(
+      getProductFormServer('https://redux-cms-panel.liara.run/products')
+    );
+  }, [store]);
+  const AddingNewProduct = () => {
+    const formData = {
+      name: ProductName,
+      stock: ProductStock,
+      price: ProductPrice,
+      off: ProductOff,
+    };
+    dispatch(
+      AddProductFormServer({
+        url: 'https://redux-cms-panel.liara.run/products',
+        product: formData,
+      })
+    );
+  };
+  const ProductDeleteHandler = (productID) => {
     Swal.fire({
       title: 'are you sure on deleting ? ',
       icon: 'question',
@@ -18,16 +46,36 @@ export default function PRoducts() {
       cancelButtonText: 'no',
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(
+          RemoveProductFormServer(
+            `https://redux-cms-panel.liara.run/products/${productID}`
+          )
+        );
+        Swal.fire({
+          title: 'products successfully deleted',
+          icon: 'success',
+        });
       }
     });
   };
-  const SettingOffProduct = () => {
+  const SettingOffProduct = (product) => {
     Swal.fire({
       title: 'Enter OFF Percent',
       input: 'text',
       inputPlaceholder: 'for example => 50',
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(
+          PutOffProductFormServer({
+            url: `https://redux-cms-panel.liara.run/products/${product.id}`,
+            product: {
+              name: product.name,
+              stock: product.stock,
+              price: product.price,
+              off: result.value,
+            },
+          })
+        );
       }
     });
   };
@@ -156,28 +204,35 @@ export default function PRoducts() {
           </th>
         </thead>
         <tbody className="w-full h-full">
-          <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
-            <td>03</td>
-            <td>i phone 13</td>
-            <td>95</td>
-            <td>15.000.000</td>
-            <td>50</td>
-            <td className="space-x-2">
-              <button
-                className="bg-none border-b border-solid border-b-primaryItem/50"
-                onClick={ProductDeleteHandler}>
-                Delete
-              </button>
-              <button
-                className="bg-none border-b border-solid border-b-primaryItem/50"
-                onClick={SettingOffProduct}>
-                Set Off
-              </button>
-            </td>
-          </tr>
+          {shownProducts?.map((product) => (
+            <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
+              <td>{product.id}</td>
+              <td>{product.name}</td>
+              <td>{product.stock}</td>
+              <td>{product.price}</td>
+              <td>{product.off}</td>
+              <td className="space-x-2">
+                <button
+                  className="bg-none border-b border-solid border-b-primaryItem/50"
+                  onClick={() => ProductDeleteHandler(product.id)}>
+                  Delete
+                </button>
+                <button
+                  className="bg-none border-b border-solid border-b-primaryItem/50"
+                  onClick={() => SettingOffProduct(product)}>
+                  Set Off
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-
+      <Pagination
+        itemCount={4}
+        items={store}
+        setShownCourses={setShownProducts}
+        pathname="/products"
+      />
       {/* ProductTable */}
     </div>
   );

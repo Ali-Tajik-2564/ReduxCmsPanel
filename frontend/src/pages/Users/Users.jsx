@@ -129,19 +129,26 @@ export default function Users() {
         </thead>
 
         <tbody className="w-full h-full">
-          {shownUsers.map((user) => (
-            <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.roll}</td>
-              <button
-                className="bg-none"
-                onClick={() => userDeleteHandler(user.id)}>
-                Delete
-              </button>
-            </tr>
-          ))}
+          {shownUsers !== [] ? (
+            <>
+              {' '}
+              {shownUsers.map((user) => (
+                <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
+                  <td>{user.id}</td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.roll}</td>
+                  <button
+                    className="bg-none"
+                    onClick={() => userDeleteHandler(user.id)}>
+                    Delete
+                  </button>
+                </tr>
+              ))}
+            </>
+          ) : (
+            ''
+          )}
         </tbody>
         <Pagination
           pathname="/users"

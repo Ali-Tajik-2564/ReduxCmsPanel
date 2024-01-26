@@ -3,25 +3,66 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
 import Swal from 'sweetalert2';
 import Editor from '../../components/Editor/Editor';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  AddArticleFormServer,
+  RemoveArticleFormServer,
+  getArticleFormServer,
+} from '../../Redux/reducer/ArticleReducer';
+import Pagination from '../../components/pagination/Pagination';
 export default function Articles() {
+  const [shownArticle, setShownArticle] = useState([]);
   const [articleBody, setArticleBody] = useState('');
   const [articleName, setArticleName] = useState('');
   const [articleCategory, setArticleCategory] = useState('');
   const [articleWriter, setArticleWriter] = useState('');
+  const dispatch = useDispatch();
+  const store = useSelector((store) => store.articles);
 
-  const AddingNewArticle = () => {};
-  const articleDeleteHandler = () => {
+  useEffect(() => {
+    dispatch(
+      getArticleFormServer('https://redux-cms-panel.liara.run/articles')
+    );
+  }, [store]);
+
+  const AddingNewArticle = () => {
+    const formData = {
+      name: articleName,
+      category: articleCategory,
+      writer: articleWriter,
+    };
+    dispatch(AddArticleFormServer(formData));
+    Swal.fire({
+      title: 'item successfully Added',
+      icon: 'success',
+    });
+  };
+
+  const articleDeleteHandler = (articleID) => {
     Swal.fire({
       title: 'are you sure on deleting ? ',
       icon: 'question',
       confirmButtonText: 'yes',
       showCancelButton: true,
       cancelButtonText: 'no',
-    }).then((result) => {
-      if (result.isConfirmed) {
-      }
-    });
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          dispatch(
+            RemoveArticleFormServer(
+              `https://redux-cms-panel.liara.run/articles/${articleID}`
+            )
+          );
+        }
+      })
+      .then(() => {
+        Swal.fire({
+          title: 'item had successfully deleted',
+          icon: 'success',
+        });
+      });
   };
+
   return (
     <div className=" bg-white mx-4 my-5  shadow-md ">
       {/* ArticleHeader */}
@@ -139,17 +180,27 @@ export default function Articles() {
           </th>
         </thead>
         <tbody className="w-full h-full">
-          <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
-            <td>03</td>
-            <td>i phone 13</td>
-            <td>Tech</td>
-            <td>ALi tajik</td>
-            <button className="bg-none" onClick={articleDeleteHandler}>
-              Delete
-            </button>
-          </tr>
+          {shownArticle?.map((article) => (
+            <tr className="flex justify-between items-center  h-16 text-primaryItem  font-normal text-base px-8 border-b border-solid border-b-primaryInput">
+              <td>{article.id}</td>
+              <td>{article.name}</td>
+              <td>{article.category}</td>
+              <td>{article.writer}</td>
+              <button
+                className="bg-none"
+                onClick={() => articleDeleteHandler(article.id)}>
+                Delete
+              </button>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <Pagination
+        itemCount={4}
+        items={store}
+        setShownCourses={setShownArticle}
+        pathname="/articles"
+      />
 
       {/* ArticleTable */}
     </div>
